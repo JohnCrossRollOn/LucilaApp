@@ -12,7 +12,8 @@ import {
 } from 'firebase/firestore';
 import { useAuth0 } from '@auth0/auth0-react';
 import { db } from '../firebase';
-import { MostrarPorDia } from './MostrarTurno';
+import AgruparDia from './AgruparDia';
+import ItemTurno from './ItemTurno';
 import esAdmin from './esAdmin';
 
 export default ({ configuracion }) => {
@@ -36,10 +37,10 @@ export default ({ configuracion }) => {
     return () => unsuscribe();
   }, []);
 
-  const crearTurno = async () => {
+  const crearTurno = async (desde, hasta) => {
     await addDoc(firestoreTurnos, {
-      desde: ahora.getTime(),
-      hasta: ahora.getTime() + 60 * 60 * 1000 * 2,
+      desde,
+      hasta,
       usuario: '',
     });
   };
@@ -51,13 +52,33 @@ export default ({ configuracion }) => {
   const borrarTurno = async (e) => {
     await deleteDoc(firestoreTurnosDoc(e.target.id));
   };
+  const agruparEnDias = (turnos) => {
+    let dias = {};
+    for (let turno of turnos) {
+      const fecha = new Date(turno.desde).toDateString();
+      dias[fecha] = [...(dias[fecha] || []), turno];
+    }
+    return Object.entries(dias);
+  };
+  const turnosPorDia = agruparEnDias(turnos);
+  const crearDia = () => {
+    const anteriorDia = turnosPorDia[turnosPorDia.length - 1];
+  };
 
   return (
     <div className="bg-slate-100 p-4 border border-slate-300 rounded-lg grid auto-cols-1 gap-4">
       <h1 className="text-2xl italic text-center">Lista de turnos</h1>
-      <MostrarPorDia
-        turnos={turnos.map((turno) => ({ ...turno, señarTurno, borrarTurno }))}
-      />
+      {turnosPorDia.map(([dateString, turnos], index) => (
+        <AgruparDia key={index} date={dateString}>
+          {turnos.map((turno) => (
+            <ItemTurno
+              turno={turno}
+              señarTurno={señarTurno}
+              borrarTurno={borrarTurno}
+            />
+          ))}
+        </AgruparDia>
+      ))}
       {esAdmin() && <CrearTurno {...{ crearTurno }} />}
     </div>
   );
