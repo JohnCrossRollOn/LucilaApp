@@ -26,11 +26,11 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
     <div className="pl-4 p-2 border border-slate-300 rounded-md flex justify-between">
       <div>
         <p className="text-xl font-bold">Turno</p>
-        <div className="text-sm">
-          desde las{' '}
+        <div className="text-sm grid grid-cols-2 gap-1">
+          <span>desde las</span>
           <input
             type="time"
-            className="bg-slate-500 text-white rounded-full pl-6 m-[0.1rem]"
+            className="bg-slate-500 text-white rounded-full pl-6"
             defaultValue={aTimeInput(turno.desde)}
             onChange={(e) =>
               modificarTurno({
@@ -40,11 +40,10 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
             }
             readOnly={!esAdmin()}
           />
-          <br />
-          hasta las{' '}
+          <span>hasta las</span>
           <input
             type="time"
-            className="bg-slate-500 text-white rounded-full pl-6 m-[0.1rem]"
+            className="bg-slate-500 text-white rounded-full pl-6"
             defaultValue={aTimeInput(turno.hasta)}
             onChange={(e) =>
               modificarTurno({
@@ -56,7 +55,7 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
           />
         </div>
       </div>
-      <div className="flex justify-evenly">
+      <div className="flex justify-evenly items-center">
         {esAdmin() ? (
           <button
             className="border border-slate-500 rounded-md px-2 ml-auto"
@@ -65,11 +64,15 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
             {turno.user ? `Borrar turno de ${turno.user}` : 'Borrar Turno'}
           </button>
         ) : turno.user ? (
-          <strong>Ya no esta disponible</strong>
+          turno.user === user?.email ? (
+            <strong>Señaste este turno</strong>
+          ) : (
+            <strong>No esta disponible</strong>
+          )
         ) : (
           <button
             id={turno.id}
-            className="border border-slate-500 rounded-md px-2 ml-auto"
+            className="border border-slate-500 rounded-md px-2 ml-auto h-full"
             onClick={() =>
               isAuthenticated
                 ? modificarTurno({ ...turno, user: user.email })
