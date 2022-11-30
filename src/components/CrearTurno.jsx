@@ -2,7 +2,7 @@ export const CrearTurno = ({ crearTurnoAnterior }) => (
   <div className="text-white font-bold text-lg w-full">
     <button
       onClick={crearTurnoAnterior}
-      className="text-white font-bold text-lg w-full bg-slate-500 text-white rounded-xl"
+      className="text-white font-bold text-lg w-full bg-slate-300 text-white rounded-md"
     >
       Crear Turno
     </button>
@@ -11,7 +11,7 @@ export const CrearTurno = ({ crearTurnoAnterior }) => (
 export const CrearDia = ({ crearDia }) => (
   <button
     onClick={crearDia}
-    className="text-white font-bold text-lg w-full bg-slate-500 text-white rounded-xl"
+    className="text-white font-bold text-lg w-full bg-slate-300 text-white rounded-md"
   >
     Crear Dia
   </button>

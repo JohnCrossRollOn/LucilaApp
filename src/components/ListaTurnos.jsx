@@ -10,14 +10,12 @@ import {
   doc,
   deleteDoc,
 } from 'firebase/firestore';
-import { useAuth0 } from '@auth0/auth0-react';
 import { db } from '../firebase';
 import AgruparDia from './AgruparDia';
 import ItemTurno from './ItemTurno';
 import esAdmin from './esAdmin';
 
-export default ({ configuracion }) => {
-  const { isAuthenticated, user } = useAuth0;
+export default () => {
   const firestoreTurnos = collection(db, 'turnos');
   const firestoreTurnosDoc = (id) => doc(db, 'turnos', id);
 
@@ -69,9 +67,9 @@ export default ({ configuracion }) => {
   const turnosPorDia = agruparEnDias(turnos);
 
   const crearDia = async () => {
-    const anteriorDia = turnosPorDia[turnosPorDia.length - 1];
+    const anteriorDia = turnosPorDia[turnosPorDia.length - 1] || [{}];
     const dia = 1000 * 60 * 60 * 24;
-    for (let turno of anteriorDia[1]) {
+    for (let turno of anteriorDia[1] || [{}]) {
       await crearTurno(turno.desde + dia, turno.hasta + dia);
     }
   };
