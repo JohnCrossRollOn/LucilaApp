@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import CrearTurno from './CrearTurno';
+import { CrearTurno, CrearDia } from './CrearTurno';
 import {
   query,
   collection,
@@ -39,18 +39,16 @@ export default ({ configuracion }) => {
 
   const crearTurno = async (desde, hasta) => {
     await addDoc(firestoreTurnos, {
-      desde,
-      hasta,
+      desde: desde || ahora.getTime(),
+      hasta: hasta || ahora.getTime() + 60 * 60 * 1000,
       usuario: '',
     });
   };
-  const señarTurno = async (e) => {
-    await updateDoc(firestoreTurnosDoc(e.target.id), {
-      user: 'marta',
-    });
+  const modificarTurno = async (doc) => {
+    await updateDoc(firestoreTurnosDoc(doc.id), doc);
   };
-  const borrarTurno = async (e) => {
-    await deleteDoc(firestoreTurnosDoc(e.target.id));
+  const borrarTurno = async (id) => {
+    await deleteDoc(firestoreTurnosDoc(id));
   };
   const agruparEnDias = (turnos) => {
     let dias = {};
@@ -62,10 +60,10 @@ export default ({ configuracion }) => {
   };
   const crearTurnoAnterior = async () => {
     const anteriorTurno = turnos[turnos.length - 1];
-    const anteriorDuracion = anteriorTurno.hasta - anteriorTurno.desde;
+    const anteriorDuracion = anteriorTurno?.hasta - anteriorTurno?.desde;
     await crearTurno(
-      anteriorTurno.hasta,
-      anteriorTurno.hasta + anteriorDuracion
+      anteriorTurno?.hasta,
+      anteriorTurno?.hasta + anteriorDuracion
     );
   };
   const turnosPorDia = agruparEnDias(turnos);
@@ -80,20 +78,21 @@ export default ({ configuracion }) => {
 
   return (
     <div className="bg-slate-100 p-4 border border-slate-300 rounded-lg grid auto-cols-1 gap-4">
-      <h1 className="text-2xl italic text-center">Lista de turnos</h1>
+      <h1 className="text-[2.5rem] italic text-center">Lista de turnos</h1>
       {turnosPorDia.map(([dateString, turnos], index) => (
         <AgruparDia key={index} date={dateString}>
           {turnos.map((turno, index) => (
             <ItemTurno
               turno={turno}
-              señarTurno={señarTurno}
+              modificarTurno={modificarTurno}
               borrarTurno={borrarTurno}
               key={index}
             />
           ))}
+          {esAdmin() && <CrearTurno {...{ crearTurnoAnterior }} />}
         </AgruparDia>
       ))}
-      {esAdmin() && <CrearTurno {...{ crearTurnoAnterior, crearDia }} />}
+      {esAdmin() && <CrearDia {...{ crearDia }} />}
     </div>
   );
 };

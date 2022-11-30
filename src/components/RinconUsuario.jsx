@@ -20,7 +20,7 @@ export default () => {
           <span className="px-2">{user.nickname}</span>
         </div>
       ) : (
-        'loguearse'
+        <span className="px-2">loguearse</span>
       )}
     </button>
   );
