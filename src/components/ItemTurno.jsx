@@ -1,23 +1,59 @@
-import { useState } from 'react';
 import esAdmin from './esAdmin';
 import { useAuth0 } from '@auth0/auth0-react';
 
 export default ({ turno, borrarTurno, modificarTurno }) => {
   const { user, isAuthenticated, loginWithPopup } = useAuth0();
-
+  const aTimeInput = (turno) => {
+    const resultado = new Date(turno);
+    return `${
+      resultado.getHours() > 9
+        ? resultado.getHours()
+        : '0' + resultado.getHours()
+    }:${
+      resultado.getMinutes() > 9
+        ? resultado.getMinutes()
+        : '0' + resultado.getMinutes()
+    }`;
+  };
+  const deTimeInputANumber = (string, aPartirDe) => {
+    const split = string.split(':');
+    const resultado = new Date(aPartirDe);
+    resultado.setHours(split[0]);
+    resultado.setMinutes(split[1]);
+    return new Date(resultado).getTime();
+  };
   return (
     <div className="pl-4 p-2 border border-slate-300 rounded-md flex justify-between">
       <div>
         <p className="text-xl font-bold">Turno</p>
-        <div className="font-mono text-sm">
+        <div className="text-sm">
           desde las{' '}
-          <strong className="border border-slate-500 px-1 rounded-md break-keep whitespace-nowrap">
-            {new Date(turno.desde).toLocaleTimeString()}
-          </strong>{' '}
+          <input
+            type="time"
+            className="bg-slate-500 text-white rounded-full pl-3"
+            defaultValue={aTimeInput(turno.desde)}
+            onChange={(e) =>
+              modificarTurno({
+                ...turno,
+                desde: deTimeInputANumber(e.target.value, turno.desde),
+              })
+            }
+            readOnly={!esAdmin()}
+          />
+          <br />
           hasta las{' '}
-          <strong className="border border-slate-500 px-1 rounded-md break-keep whitespace-nowrap">
-            {new Date(turno.hasta).toLocaleTimeString()}
-          </strong>{' '}
+          <input
+            type="time"
+            className="bg-slate-500 text-white rounded-full pl-4 m-[0.1rem]"
+            defaultValue={aTimeInput(turno.hasta)}
+            onChange={(e) =>
+              modificarTurno({
+                ...turno,
+                hasta: deTimeInputANumber(e.target.value, turno.hasta),
+              })
+            }
+            readOnly={!esAdmin()}
+          />
         </div>
       </div>
       <div className="flex justify-evenly">
