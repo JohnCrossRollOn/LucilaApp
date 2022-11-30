@@ -55,7 +55,9 @@ export default ({ configuracion }) => {
   return (
     <div className="bg-slate-100 p-4 border border-slate-300 rounded-lg grid auto-cols-1 gap-4">
       <h1 className="text-2xl italic text-center">Lista de turnos</h1>
-      <MostrarPorDia {...{ turnos }} />
+      <MostrarPorDia
+        turnos={turnos.map((turno) => ({ ...turno, señarTurno, borrarTurno }))}
+      />
       {esAdmin() && <CrearTurno {...{ crearTurno }} />}
     </div>
   );

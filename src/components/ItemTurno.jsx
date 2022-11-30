@@ -2,7 +2,7 @@ import { useState } from 'react';
 import esAdmin from './esAdmin';
 import { useAuth0 } from '@auth0/auth0-react';
 
-export default ({ turno, señarTurno, borrarTurno }) => {
+export default ({ turno }) => {
   const [editar, setEditar] = useState(false);
   const { user, isAuthenticated } = useAuth0();
   return (
@@ -26,7 +26,7 @@ export default ({ turno, señarTurno, borrarTurno }) => {
           <button
             id={turno.id}
             className="border border-slate-500 rounded-md px-2 ml-auto"
-            onClick={borrarTurno}
+            onClick={turno.borrarTurno}
           >
             {turno.user ? `Borrar turno de ${turno.user}` : 'Borrar Turno'}
           </button>
@@ -36,7 +36,7 @@ export default ({ turno, señarTurno, borrarTurno }) => {
           <button
             id={turno.id}
             className="border border-slate-500 rounded-md px-2 ml-auto"
-            onClick={señarTurno}
+            onClick={turno.señarTurno}
           >
             Señar Turno
           </button>
