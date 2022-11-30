@@ -23,37 +23,36 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
     return new Date(resultado).getTime();
   };
   return (
-    <div className="pl-4 p-2 border border-slate-300 rounded-md flex justify-between">
-      <div>
-        <p className="text-xl font-bold">Turno</p>
-        <div className="text-sm grid grid-cols-2 gap-1">
-          <span>desde las</span>
-          <input
-            type="time"
-            className="bg-slate-500 text-white rounded-full pl-6"
-            defaultValue={aTimeInput(turno.desde)}
-            onChange={(e) =>
-              modificarTurno({
-                ...turno,
-                desde: deTimeInputANumber(e.target.value, turno.desde),
-              })
-            }
-            readOnly={!esAdmin()}
-          />
-          <span>hasta las</span>
-          <input
-            type="time"
-            className="bg-slate-500 text-white rounded-full pl-6"
-            defaultValue={aTimeInput(turno.hasta)}
-            onChange={(e) =>
-              modificarTurno({
-                ...turno,
-                hasta: deTimeInputANumber(e.target.value, turno.hasta),
-              })
-            }
-            readOnly={!esAdmin()}
-          />
-        </div>
+    <div className="p-4 p-2 border-2 grid grid-cols-2 border-secundario shadow-md rounded-md flex justify-between">
+      <h4 className="text-2xl">Turno</h4>
+      <span>{turno.user ? 'ocupado' : 'libre'}</span>
+      <div className="text-md font-light tracking-widest grid grid-cols-2 gap-1">
+        <span className="hidden md:block">desde las</span>
+        <input
+          type="time"
+          className="bg-slate-500 text-white rounded-full pl-6"
+          defaultValue={aTimeInput(turno.desde)}
+          onChange={(e) =>
+            modificarTurno({
+              ...turno,
+              desde: deTimeInputANumber(e.target.value, turno.desde),
+            })
+          }
+          readOnly={!esAdmin()}
+        />
+        <span className="hidden md:block">hasta las</span>
+        <input
+          type="time"
+          className="bg-slate-500 text-white rounded-full pl-6"
+          defaultValue={aTimeInput(turno.hasta)}
+          onChange={(e) =>
+            modificarTurno({
+              ...turno,
+              hasta: deTimeInputANumber(e.target.value, turno.hasta),
+            })
+          }
+          readOnly={!esAdmin()}
+        />
       </div>
       <div className="flex justify-evenly items-center">
         {esAdmin() ? (
