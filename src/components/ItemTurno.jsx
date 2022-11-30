@@ -23,40 +23,60 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
     return new Date(resultado).getTime();
   };
   return (
-    <div className="pl-4 p-2 border border-slate-300 rounded-md flex justify-between">
-      <div>
-        <p className="text-xl font-bold">Turno</p>
-        <div className="text-sm">
-          desde las{' '}
-          <input
-            type="time"
-            className="bg-slate-500 text-white rounded-full pl-6 m-[0.1rem]"
-            defaultValue={aTimeInput(turno.desde)}
-            onChange={(e) =>
-              modificarTurno({
-                ...turno,
-                desde: deTimeInputANumber(e.target.value, turno.desde),
-              })
-            }
-            readOnly={!esAdmin()}
-          />
-          <br />
-          hasta las{' '}
-          <input
-            type="time"
-            className="bg-slate-500 text-white rounded-full pl-6 m-[0.1rem]"
-            defaultValue={aTimeInput(turno.hasta)}
-            onChange={(e) =>
-              modificarTurno({
-                ...turno,
-                hasta: deTimeInputANumber(e.target.value, turno.hasta),
-              })
-            }
-            readOnly={!esAdmin()}
-          />
-        </div>
+    <div
+      className={`p-2 grid grid-cols-2 gap-2 ${
+        turno.user
+          ? turno.user === user?.email
+            ? 'bg-green-200'
+            : 'grayscale'
+          : 'border border-slate-300'
+      } shadow-md rounded-md flex justify-between`}
+    >
+      <h4 className="text-2xl">Turno</h4>
+      <span className={'text-right text-2xl font-extrabold'}>
+        {turno.user
+          ? turno.user === user?.email
+            ? 'señado'
+            : 'no disponible'
+          : 'libre'}
+      </span>
+      <div className="text-md text-center font-light tracking-widest grid grid-cols-1 md:grid-cols-2 gap-2">
+        <span className="hidden md:block">desde las</span>
+        <input
+          type="time"
+          className={`border-2 border-primario text-md pl-10 font-bold tracking-widest text-center ${
+            turno.user && turno.user === user?.email
+              ? 'text-white bg-primario'
+              : 'text-primario'
+          } w-min rounded-full`}
+          defaultValue={aTimeInput(turno.desde)}
+          onChange={(e) =>
+            modificarTurno({
+              ...turno,
+              desde: deTimeInputANumber(e.target.value, turno.desde),
+            })
+          }
+          readOnly={!esAdmin()}
+        />
+        <span className="hidden md:block">hasta las</span>
+        <input
+          type="time"
+          className={`border-2 border-primario text-md pl-10 font-bold tracking-widest text-center ${
+            turno.user && turno.user === user?.email
+              ? 'text-white bg-primario'
+              : 'text-primario'
+          } w-min rounded-full`}
+          defaultValue={aTimeInput(turno.hasta)}
+          onChange={(e) =>
+            modificarTurno({
+              ...turno,
+              hasta: deTimeInputANumber(e.target.value, turno.hasta),
+            })
+          }
+          readOnly={!esAdmin()}
+        />
       </div>
-      <div className="flex justify-evenly">
+      <div className="flex justify-end items-center">
         {esAdmin() ? (
           <button
             className="border border-slate-500 rounded-md px-2 ml-auto"
@@ -65,18 +85,24 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
             {turno.user ? `Borrar turno de ${turno.user}` : 'Borrar Turno'}
           </button>
         ) : turno.user ? (
-          <strong>Ya no esta disponible</strong>
+          turno.user === user?.email ? (
+            <p className="font-MaterialIcons text-[4rem] px-2 leading-3">
+              task_alt
+            </p>
+          ) : (
+            <p className="font-MaterialIcons"></p>
+          )
         ) : (
           <button
             id={turno.id}
-            className="border border-slate-500 rounded-md px-2 ml-auto"
+            className="border-2 border-primario text-primario font-MaterialIcons text-[4rem] leading-none rounded-md px-2 ml-auto h-full"
             onClick={() =>
               isAuthenticated
                 ? modificarTurno({ ...turno, user: user.email })
                 : loginWithPopup()
             }
           >
-            Señar Turno
+            person_add_alt
           </button>
         )}
       </div>

@@ -75,8 +75,13 @@ export default () => {
   };
 
   return (
-    <div className="bg-slate-100 p-4 border border-slate-300 rounded-lg grid auto-cols-1 gap-4">
-      <h1 className="text-[2.5rem] italic text-center">Lista de turnos</h1>
+    <div className="rounded-lg grid auto-cols-1 gap-12">
+      <h1 className="relative text-[3rem] z-10 font-semibold">
+        Lista de turnos
+        <span className="absolute leading-3 right-[0.3rem] top-[2rem] text-[5rem] -z-10 text-secundario font-MaterialIcons">
+          pending_actions
+        </span>
+      </h1>
       {turnosPorDia.map(([dateString, turnos], index) => (
         <AgruparDia key={index} date={dateString}>
           {turnos.map((turno, index) => (

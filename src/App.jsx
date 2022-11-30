@@ -4,12 +4,10 @@ import Nav from './components/Nav';
 
 export default () => {
   return (
-    <div className="min-h-[100vh] bg-gradient-to-b from-pink-200 to-pink-300">
+    <div className="min-h-[100vh] bg-slate-50 text-slate-900">
       <Nav />
       <br />
-      <p>{new Date().toLocaleString()}</p>
-      <br />
-      <div className="md:px-4">
+      <div className="px-4 md:px-16 lg:px-64">
         <Routes>
           <Route path="" element={<ListaTurnos />} />
         </Routes>
