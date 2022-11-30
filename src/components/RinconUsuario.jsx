@@ -1,17 +1,15 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { useContext } from 'react';
-import { AdminContext } from '../App';
+import esAdmin from './esAdmin';
 
 export default () => {
   const { loginWithPopup, logout, user, isAuthenticated, isLoading } =
     useAuth0();
-  const isAdmin = useContext(AdminContext);
 
   return (
     <button
       onClick={isLoading ? null : isAuthenticated ? logout : loginWithPopup}
       className={`flex items-center ${
-        isAdmin ? 'bg-blue-500' : 'bg-pink-500'
+        esAdmin() ? 'bg-blue-500' : 'bg-pink-500'
       } text-white p-1 font-bold rounded-full h-full`}
     >
       {isLoading ? (

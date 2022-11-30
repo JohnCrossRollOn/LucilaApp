@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import ItemTurno from './ItemTurno';
 import CrearTurno from './CrearTurno';
 import {
   query,
@@ -14,6 +13,7 @@ import {
 import { useAuth0 } from '@auth0/auth0-react';
 import { db } from '../firebase';
 import { MostrarPorDia } from './MostrarTurno';
+import esAdmin from './esAdmin';
 
 export default ({ configuracion }) => {
   const { isAuthenticated, user } = useAuth0;
@@ -53,20 +53,10 @@ export default ({ configuracion }) => {
   };
 
   return (
-    <div className="bg-slate-100 p-1 border border-slate-300 rounded-lg grid auto-cols-1 gap-1">
-      <div className="bg-slate-900 text-green-500 text-xs font-mono p-4 tracking-widest m-4">
-        <p>Lista de turnos</p>
-        <p>configuracion</p>
-        {JSON.stringify(configuracion)}
-        <p>hoy en milisegundos = {hoy}</p>
-        <p>
-          esto es el dia de hoy en milisegundos ={' '}
-          {new Date(hoy).toLocaleString()}
-        </p>
-      </div>
-
+    <div className="bg-slate-100 p-4 border border-slate-300 rounded-lg grid auto-cols-1 gap-4">
+      <h1 className="text-2xl italic text-center">Lista de turnos</h1>
       <MostrarPorDia {...{ turnos }} />
-      <CrearTurno {...{ crearTurno }} />
+      {esAdmin() && <CrearTurno {...{ crearTurno }} />}
     </div>
   );
 };

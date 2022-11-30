@@ -14,7 +14,7 @@ export const MostrarPorDia = ({ turnos }) => {
       {Object.entries(agruparEnDias(turnos)).map(
         ([dateString, turnos], index) => (
           <div
-            className="p-2 border border-slate-300 rounded-md grid grid-cols-1 gap-1"
+            className="p-2 border border-slate-300 rounded-md grid grid-cols-1 gap-2"
             key={index}
           >
             <div className="flex flex-row justify-between px-1">
