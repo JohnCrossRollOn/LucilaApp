@@ -23,14 +23,32 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
     return new Date(resultado).getTime();
   };
   return (
-    <div className="p-4 p-2 border-2 grid grid-cols-2 border-secundario shadow-md rounded-md flex justify-between">
+    <div
+      className={`p-2 grid grid-cols-2 gap-2 ${
+        turno.user
+          ? turno.user === user?.email
+            ? 'bg-green-200'
+            : 'grayscale'
+          : 'border border-slate-300'
+      } shadow-md rounded-md flex justify-between`}
+    >
       <h4 className="text-2xl">Turno</h4>
-      <span>{turno.user ? 'ocupado' : 'libre'}</span>
-      <div className="text-md font-light tracking-widest grid grid-cols-2 gap-1">
+      <span className={'text-right text-2xl font-extrabold'}>
+        {turno.user
+          ? turno.user === user?.email
+            ? 'señado'
+            : 'no disponible'
+          : 'libre'}
+      </span>
+      <div className="text-md text-center font-light tracking-widest grid grid-cols-1 md:grid-cols-2 gap-2">
         <span className="hidden md:block">desde las</span>
         <input
           type="time"
-          className="bg-slate-500 text-white rounded-full pl-6"
+          className={`border-2 border-primario text-md pl-10 font-bold tracking-widest text-center ${
+            turno.user && turno.user === user?.email
+              ? 'text-white bg-primario'
+              : 'text-primario'
+          } w-min rounded-full`}
           defaultValue={aTimeInput(turno.desde)}
           onChange={(e) =>
             modificarTurno({
@@ -43,7 +61,11 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
         <span className="hidden md:block">hasta las</span>
         <input
           type="time"
-          className="bg-slate-500 text-white rounded-full pl-6"
+          className={`border-2 border-primario text-md pl-10 font-bold tracking-widest text-center ${
+            turno.user && turno.user === user?.email
+              ? 'text-white bg-primario'
+              : 'text-primario'
+          } w-min rounded-full`}
           defaultValue={aTimeInput(turno.hasta)}
           onChange={(e) =>
             modificarTurno({
@@ -54,7 +76,7 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
           readOnly={!esAdmin()}
         />
       </div>
-      <div className="flex justify-evenly items-center">
+      <div className="flex justify-end items-center">
         {esAdmin() ? (
           <button
             className="border border-slate-500 rounded-md px-2 ml-auto"
@@ -64,21 +86,23 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
           </button>
         ) : turno.user ? (
           turno.user === user?.email ? (
-            <strong>Señaste este turno</strong>
+            <p className="font-MaterialIcons text-[4rem] px-2 leading-3">
+              task_alt
+            </p>
           ) : (
-            <strong>No esta disponible</strong>
+            <p className="font-MaterialIcons"></p>
           )
         ) : (
           <button
             id={turno.id}
-            className="border border-slate-500 rounded-md px-2 ml-auto h-full"
+            className="border-2 border-primario text-primario font-MaterialIcons text-[4rem] leading-none rounded-md px-2 ml-auto h-full"
             onClick={() =>
               isAuthenticated
                 ? modificarTurno({ ...turno, user: user.email })
                 : loginWithPopup()
             }
           >
-            Señar Turno
+            person_add_alt
           </button>
         )}
       </div>

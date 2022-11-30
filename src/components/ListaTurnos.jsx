@@ -75,7 +75,7 @@ export default () => {
   };
 
   return (
-    <div className="rounded-lg grid auto-cols-1 gap-8">
+    <div className="rounded-lg grid auto-cols-1 gap-12">
       <h1 className="relative text-[3rem] z-10 font-semibold">
         Lista de turnos
         <span className="absolute leading-3 right-[0.3rem] top-[2rem] text-[5rem] -z-10 text-secundario font-MaterialIcons">
