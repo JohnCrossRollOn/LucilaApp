@@ -1,13 +1,18 @@
-export default ({ crearTurno, crearTurnoAnterior, crearDia }) => (
-  <div className="grid grid-cols-2 gap-4 h-16 text-white font-bold text-lg">
+export const CrearTurno = ({ crearTurnoAnterior }) => (
+  <div className="text-white font-bold text-lg w-full">
     <button
       onClick={crearTurnoAnterior}
-      className="bg-slate-500 text-white rounded-xl"
+      className="text-white font-bold text-lg w-full bg-slate-500 text-white rounded-xl"
     >
       Crear Turno
     </button>
-    <button onClick={crearDia} className="bg-slate-500 text-white rounded-xl">
-      Crear Dia
-    </button>
   </div>
+);
+export const CrearDia = ({ crearDia }) => (
+  <button
+    onClick={crearDia}
+    className="text-white font-bold text-lg w-full bg-slate-500 text-white rounded-xl"
+  >
+    Crear Dia
+  </button>
 );
