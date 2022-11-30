@@ -30,7 +30,7 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
           desde las{' '}
           <input
             type="time"
-            className="bg-slate-500 text-white rounded-full pl-3"
+            className="bg-slate-500 text-white rounded-full pl-6 m-[0.1rem]"
             defaultValue={aTimeInput(turno.desde)}
             onChange={(e) =>
               modificarTurno({
@@ -44,7 +44,7 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
           hasta las{' '}
           <input
             type="time"
-            className="bg-slate-500 text-white rounded-full pl-4 m-[0.1rem]"
+            className="bg-slate-500 text-white rounded-full pl-6 m-[0.1rem]"
             defaultValue={aTimeInput(turno.hasta)}
             onChange={(e) =>
               modificarTurno({
