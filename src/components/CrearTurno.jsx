@@ -1,18 +1,16 @@
 export const CrearTurno = ({ crearTurnoAnterior }) => (
-  <div className="text-white font-bold text-lg w-full">
-    <button
-      onClick={crearTurnoAnterior}
-      className="text-white font-bold text-lg w-full bg-slate-300 text-white rounded-md"
-    >
-      Crear Turno
-    </button>
-  </div>
+  <button
+    onClick={crearTurnoAnterior}
+    className="font-MaterialIcons text-slate-200 text-[2rem] text-white font-bold leading-none"
+  >
+    add
+  </button>
 );
 export const CrearDia = ({ crearDia }) => (
   <button
     onClick={crearDia}
-    className="text-white font-bold text-lg w-full bg-slate-300 text-white rounded-md"
+    className="font-MaterialIcons text-slate-200 text-[4rem] text-white font-bold leading-none"
   >
-    Crear Dia
+    add_circle
   </button>
 );

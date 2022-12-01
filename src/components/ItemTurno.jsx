@@ -51,15 +51,17 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
       <div className="flex justify-end items-center">
         {esAdmin() ? (
           <button
-            className="border border-slate-500 rounded-md px-2 ml-auto"
+            className={`font-MaterialIcons font-extralight ${
+              turno.user ? 'text-slate-200' : 'text-slate-800'
+            } leading-none h-full text-[2rem] px-4`}
             onClick={() => borrarTurno(turno.id)}
           >
-            {turno.user ? `Borrar turno de ${turno.user}` : 'Borrar Turno'}
+            {turno.user ? 'person_remove' : 'delete_outline'}
           </button>
         ) : turno.user ? (
           turno.user === user?.email ? (
             <span className="border-4 border-slate-800 text-white bg-slate-800 font-MaterialIcons text-[2rem] font-extralight leading-none rounded-full px-4 ml-auto h-full">
-              how_to_reg
+              sentiment_very_satisfied
             </span>
           ) : (
             <p className="font-MaterialIcons text-[2rem] leading-none px-4 text-primario h-full">

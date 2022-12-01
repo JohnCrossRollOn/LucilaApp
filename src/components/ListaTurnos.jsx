@@ -70,7 +70,7 @@ export default () => {
   };
 
   return (
-    <div className="rounded-lg grid auto-cols-1 gap-8">
+    <div className="rounded-lg grid auto-cols-1 gap-8 py-8">
       <h1 className="relative text-[3rem] z-10 font-semibold leading-none">
         Lista de turnos.
         <span className="absolute leading-none font-extralight right-[0] top-[0] text-[6rem] -z-10 text-secundario font-MaterialIcons">
