@@ -12,6 +12,6 @@
       sans-serif;
   }
   input[type='time']::-webkit-calendar-picker-indicator {
-    display: none;
+    background: none;
   }
 }

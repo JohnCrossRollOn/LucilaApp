@@ -19,18 +19,16 @@ import esAdmin from './esAdmin';
 export default () => {
   const firestoreTurnos = collection(db, 'turnos');
   const firestoreTurnosDoc = (id) => doc(db, 'turnos', id);
-
   const [turnos, setTurnos] = useState([]);
+
   const ahora = new Date();
   const hoy = new Date(ahora.toDateString()).getTime();
-  console.log(turnos.map((turno) => new Date(turno.desde).toISOString()));
+  console.log(
+    turnos.map((turno) => new Date(turno.desde).toLocaleTimeString())
+  );
   useEffect(() => {
     const unsuscribe = onSnapshot(
-      query(
-        firestoreTurnos,
-        where('desde', '>=', hoy),
-        orderBy('desde', 'asc')
-      ),
+      query(firestoreTurnos, where('desde', '>=', hoy)),
       (querySnapshot) => {
         setTurnos(
           querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -61,10 +59,9 @@ export default () => {
     return Object.entries(dias);
   };
   const crearTurnoAnterior = async (turnos) => {
-    const anteriorTurno = turnos[turnos.length - 1];
-    await crearTurno(anteriorTurno?.desde || ahora.getTime());
+    const turnoAnterior = turnos[turnos.length - 1];
+    await crearTurno(turnoAnterior?.desde || ahora.getTime());
   };
-  const turnosPorDia = agruparEnDias(turnos);
 
   const crearDia = async () => {
     const anteriorDia = turnosPorDia[turnosPorDia.length - 1]
@@ -76,6 +73,7 @@ export default () => {
     }
   };
 
+  const turnosPorDia = agruparEnDias(turnos);
   return (
     <div className="rounded-lg grid auto-cols-1 gap-8 py-8">
       <h1 className="relative text-[3rem] z-10 font-semibold leading-none">
@@ -99,7 +97,10 @@ export default () => {
             />
           ))}
           {esAdmin() && (
-            <CrearTurno {...{ crearTurnoAnterior }} turnos={turnos} />
+            <CrearTurno
+              crearTurnoAnterior={() => crearTurnoAnterior(turnos)}
+              turnos={turnos}
+            />
           )}
         </AgruparDia>
       ))}

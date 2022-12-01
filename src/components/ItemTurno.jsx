@@ -8,11 +8,11 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
     return `${
       resultado.getHours() > 9
         ? resultado.getHours()
-        : '0' + resultado.getHours()
+        : `0${resultado.getHours()}`
     }:${
       resultado.getMinutes() > 9
         ? resultado.getMinutes()
-        : '0' + resultado.getMinutes()
+        : `0${resultado.getMinutes()}`
     }`;
   };
   const deTimeInputANumber = (string, aPartirDe) => {
