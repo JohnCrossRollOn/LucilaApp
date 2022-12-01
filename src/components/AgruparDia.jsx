@@ -1,6 +1,6 @@
 export default ({ children, date }) => {
   return (
-    <div className="grid grid-cols-1 gap-2">
+    <div className="grid grid-cols-1 gap-2 p-2 border border-slate-200 rounded-[2.5rem]">
       <div className="flex flex-row justify-between items-center mt-2 mx-3">
         <span className="text-2xl leading-none italic">
           {

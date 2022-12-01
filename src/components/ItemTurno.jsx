@@ -24,7 +24,7 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
   };
   return (
     <div
-      className={` h-18 ${
+      className={` h-16 ${
         turno.user
           ? turno.user === user?.email
             ? 'bg-green-300'
@@ -58,18 +58,18 @@ export default ({ turno, borrarTurno, modificarTurno }) => {
           </button>
         ) : turno.user ? (
           turno.user === user?.email ? (
-            <span className="border-4 border-slate-800 text-white bg-slate-800 font-MaterialIcons text-[3rem] font-extralight leading-none rounded-full px-3 ml-auto h-full">
+            <span className="border-4 border-slate-800 text-white bg-slate-800 font-MaterialIcons text-[2rem] font-extralight leading-none rounded-full px-4 ml-auto h-full">
               how_to_reg
             </span>
           ) : (
-            <p className="font-MaterialIcons text-[2rem] leading-none px-5 text-primario h-full">
+            <p className="font-MaterialIcons text-[2rem] leading-none px-4 text-primario h-full">
               person_off
             </p>
           )
         ) : (
           <button
             id={turno.id}
-            className="border-4 border-primario bg-primario text-slate-200 font-MaterialIcons text-[3rem] font-extralight leading-none rounded-full px-3 h-full"
+            className="border-4 border-primario bg-primario text-slate-200 font-MaterialIcons text-[2rem] font-extralight leading-none rounded-full px-4 h-full"
             onClick={() =>
               isAuthenticated
                 ? modificarTurno({ ...turno, user: user.email })
