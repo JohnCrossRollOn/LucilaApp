@@ -70,8 +70,11 @@ export default () => {
       await crearTurno(turno.desde + dia);
     }
   };
+  useEffect(() => {
+    setTurnosPorDia(agruparEnDias(turnos));
+  }, [turnos]);
 
-  const turnosPorDia = agruparEnDias(turnos);
+  const [turnosPorDia, setTurnosPorDia] = useState(agruparEnDias(turnos));
   return (
     <div className="rounded-lg grid auto-cols-1 gap-8 py-8">
       <h1 className="relative text-[3rem] z-10 font-semibold leading-none">
