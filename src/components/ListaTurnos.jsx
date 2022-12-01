@@ -23,9 +23,7 @@ export default () => {
 
   const ahora = new Date();
   const hoy = new Date(ahora.toDateString()).getTime();
-  console.log(
-    turnos.map((turno) => new Date(turno.desde).toLocaleTimeString())
-  );
+
   useEffect(() => {
     const unsuscribe = onSnapshot(
       query(firestoreTurnos, where('desde', '>=', hoy)),
