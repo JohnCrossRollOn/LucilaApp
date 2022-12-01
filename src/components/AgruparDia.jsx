@@ -1,4 +1,4 @@
-export default ({ children, date }) => {
+export default ({ children, date, crearTurnoAnterior }) => {
   return (
     <div className="grid grid-cols-1 gap-2 p-2 border border-slate-200 rounded-[2.5rem]">
       <div className="flex flex-row justify-between items-center mt-2 mx-3">

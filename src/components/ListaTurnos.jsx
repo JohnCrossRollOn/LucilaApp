@@ -55,7 +55,7 @@ export default () => {
     }
     return Object.entries(dias);
   };
-  const crearTurnoAnterior = async () => {
+  const crearTurnoAnterior = async (turnos) => {
     const anteriorTurno = turnos[turnos.length - 1];
     await crearTurno(anteriorTurno?.desde || ahora.getTime());
   };
@@ -65,7 +65,7 @@ export default () => {
     const anteriorDia = turnosPorDia[turnosPorDia.length - 1] || [{}];
     const dia = 1000 * 60 * 60 * 24;
     for (let turno of anteriorDia[1] || [{}]) {
-      await crearTurno(turno.desde + dia, turno.hasta + dia);
+      await crearTurno(turno.desde + dia);
     }
   };
 
@@ -78,7 +78,11 @@ export default () => {
         </span>
       </h1>
       {turnosPorDia.map(([dateString, turnos], index) => (
-        <AgruparDia key={index} date={dateString}>
+        <AgruparDia
+          key={index}
+          date={dateString}
+          crearTurnoAnterior={crearTurnoAnterior}
+        >
           {turnos.map((turno, index) => (
             <ItemTurno
               turno={turno}
@@ -87,7 +91,9 @@ export default () => {
               key={index}
             />
           ))}
-          {esAdmin() && <CrearTurno {...{ crearTurnoAnterior }} />}
+          {esAdmin() && (
+            <CrearTurno {...{ crearTurnoAnterior }} turnos={turnos} />
+          )}
         </AgruparDia>
       ))}
       {esAdmin() && <CrearDia {...{ crearDia }} />}

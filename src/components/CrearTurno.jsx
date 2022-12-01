@@ -1,6 +1,6 @@
-export const CrearTurno = ({ crearTurnoAnterior }) => (
+export const CrearTurno = ({ crearTurnoAnterior, turnos }) => (
   <button
-    onClick={crearTurnoAnterior}
+    onClick={() => crearTurnoAnterior(turnos)}
     className="font-MaterialIcons text-slate-200 text-[2rem] text-white font-bold leading-none"
   >
     add
