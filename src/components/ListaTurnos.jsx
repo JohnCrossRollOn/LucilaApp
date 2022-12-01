@@ -35,10 +35,9 @@ export default () => {
     return () => unsuscribe();
   }, []);
 
-  const crearTurno = async (desde, hasta) => {
+  const crearTurno = async (desde) => {
     await addDoc(firestoreTurnos, {
       desde: desde || ahora.getTime(),
-      hasta: hasta || ahora.getTime() + 60 * 60 * 1000,
       usuario: '',
     });
   };
@@ -58,11 +57,7 @@ export default () => {
   };
   const crearTurnoAnterior = async () => {
     const anteriorTurno = turnos[turnos.length - 1];
-    const anteriorDuracion = anteriorTurno?.hasta - anteriorTurno?.desde;
-    await crearTurno(
-      anteriorTurno?.hasta,
-      anteriorTurno?.hasta + anteriorDuracion
-    );
+    await crearTurno(anteriorTurno?.desde || ahora.getTime());
   };
   const turnosPorDia = agruparEnDias(turnos);
 
@@ -75,11 +70,11 @@ export default () => {
   };
 
   return (
-    <div className="rounded-lg grid auto-cols-1 gap-12">
-      <h1 className="relative text-[3rem] z-10 font-semibold">
-        Lista de turnos
-        <span className="absolute leading-3 right-[0.3rem] top-[2rem] text-[5rem] -z-10 text-secundario font-MaterialIcons">
-          pending_actions
+    <div className="rounded-lg grid auto-cols-1 gap-8">
+      <h1 className="relative text-[3rem] z-10 font-semibold leading-none">
+        Lista de turnos.
+        <span className="absolute leading-none font-extralight right-[0] top-[0] text-[6rem] -z-10 text-secundario font-MaterialIcons">
+          fact_check
         </span>
       </h1>
       {turnosPorDia.map(([dateString, turnos], index) => (
