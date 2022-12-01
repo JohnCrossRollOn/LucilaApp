@@ -14,14 +14,14 @@ export default () => {
     >
       <div className="flex flex-row h-full items-center">
         {isLoading ? (
-          <span>esperame</span>
+          <span className="px-2">esperame</span>
         ) : isAuthenticated ? (
           <>
             <img src={user.picture} className="h-full rounded-full" />
             <span className="hidden md:inline">{user.nickname}</span>
           </>
         ) : (
-          <span>loguearse</span>
+          <span className="px-2">loguearse</span>
         )}
       </div>
     </button>

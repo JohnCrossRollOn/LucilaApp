@@ -1,8 +1,8 @@
-export default ({ children, date }) => {
+export default ({ children, date, crearTurnoAnterior }) => {
   return (
-    <div className="grid grid-cols-1 gap-4">
-      <div className="flex flex-row justify-between items-center">
-        <span className="text-2xl font-extrabold leading-3">
+    <div className="grid grid-cols-1 gap-2 p-2 border border-slate-200 rounded-[2.5rem]">
+      <div className="flex flex-row justify-between items-center mt-2 mx-3">
+        <span className="text-2xl leading-none italic">
           {
             [
               'domingo',
@@ -15,7 +15,7 @@ export default ({ children, date }) => {
             ][new Date(date).getDay()]
           }
         </span>
-        <span className="text-md font-light tracking-widest leading-3">
+        <span className="text-md font-light leading-none tracking-widest italic">
           {new Date(date).toLocaleDateString()}
         </span>
       </div>
