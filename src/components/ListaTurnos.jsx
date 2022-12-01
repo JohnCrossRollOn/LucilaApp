@@ -5,6 +5,7 @@ import {
   collection,
   onSnapshot,
   where,
+  orderBy,
   addDoc,
   updateDoc,
   doc,
@@ -22,10 +23,14 @@ export default () => {
   const [turnos, setTurnos] = useState([]);
   const ahora = new Date();
   const hoy = new Date(ahora.toDateString()).getTime();
-
+  console.log(turnos.map((turno) => new Date(turno.desde).toISOString()));
   useEffect(() => {
     const unsuscribe = onSnapshot(
-      query(firestoreTurnos, where('desde', '>=', hoy)),
+      query(
+        firestoreTurnos,
+        where('desde', '>=', hoy),
+        orderBy('desde', 'asc')
+      ),
       (querySnapshot) => {
         setTurnos(
           querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -62,9 +67,11 @@ export default () => {
   const turnosPorDia = agruparEnDias(turnos);
 
   const crearDia = async () => {
-    const anteriorDia = turnosPorDia[turnosPorDia.length - 1] || [{}];
+    const anteriorDia = turnosPorDia[turnosPorDia.length - 1]
+      ? turnosPorDia[turnosPorDia.length - 1]
+      : [[], [{ desde: ahora.getTime() }]];
     const dia = 1000 * 60 * 60 * 24;
-    for (let turno of anteriorDia[1] || [{}]) {
+    for (let turno of anteriorDia[1]) {
       await crearTurno(turno.desde + dia);
     }
   };
